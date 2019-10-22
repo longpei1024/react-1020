@@ -16,9 +16,9 @@ reducer函数：根据原有的state和指定的action，并返回一个新的st
 
     switch (action.type) {
       case INCREEMENT:
-        return state + action.date
+        return state + action.data
       case DECREEMENT:
-        return state - action.date
+        return state - action.data
       default:
         return state 
     }
