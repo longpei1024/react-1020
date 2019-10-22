@@ -1,10 +1,20 @@
+/* 
+封装一个能发ajax请求的函数/对象
+进行axios的二次封装(ajax请求)
+
+  1). 将post请求的data对象数据转换为urlencode格式的字符串数据
+  2). 如果请求成功, 判断操作是否成功
+      如果成功返回返回的data数据, 外部具体请求得到需要的数据
+      如果失败返回携带msg的错误, 外部具体请求处理错误
+  3).统一处理请求异常, 外部调用者不用再处理请求异常
+  4). 请求过程中显示请求进度的效果
+*/
+
 import axios from 'axios'
 import qs from 'qs'
 import {message} from 'antd'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-
-
 
 
 const instance = axios.create({

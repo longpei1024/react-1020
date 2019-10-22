@@ -10,8 +10,14 @@ import {
 import logo from './images/logo.png'
 import './login.less'
 import ajax from '../../api/ajax'
+import { connect } from 'http2';
 
 
+@connect(
+  state => ({hasLogin: state.user.hasLogin}),  // 用于显示的一般属性
+  {loginAsync} // 用于更新状态的函数属性
+)
+@Form.create()    // Login = Form.create()(Login)
 
 
  class Login extends Component{
@@ -21,8 +27,12 @@ import ajax from '../../api/ajax'
     e.preventDefault()
 
     this.props.form.validateFields((err, values)=>{
-      if (!err) {
-        console.log('发送ajax请求', values)
+      if (!err) { // 验证成功
+        const {username, password} = values
+        console.log('发送ajax请求', {username, password})
+
+        this.props.loginAsync(username, password)
+
         // axios.post('/login',values)
 /*         ajax.post('/login2',values)
           .then(({user, token}) => {
@@ -33,7 +43,7 @@ import ajax from '../../api/ajax'
 
           }) */
 
-        ajax.post('/login', values) // username=admin&password=admin
+/*         ajax.post('/login', values) // username=admin&password=admin
           .then((result) => {
 
             const {status, data: {user, token}={}, msg, xxx='abc'} = result // 嵌套解构 变量默认值
@@ -46,7 +56,7 @@ import ajax from '../../api/ajax'
             
           }) 
 
-
+ */
       } else{
         // 什么都不用写
       }
@@ -128,6 +138,9 @@ import ajax from '../../api/ajax'
 }
 
 
-const LoginWrap = Form.create()(Login)
+/* export default connect(
+  state => ({hasLogin:state.user.hasLogin}),
+  {loginAsync}
+)(Form.create()(Login)) */
 
-export default LoginWrap
+export default Login
