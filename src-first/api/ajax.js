@@ -23,6 +23,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(config => {
   console.log('request interceptor onResolved()')
+  NProgress.start()
 
   const {data} = config
   if (data instanceof Object) {
@@ -37,7 +38,7 @@ instance.interceptors.response.use(
   response => {
     console.log('response interceptor onResolved()')
 
-    NProgress.start()
+    NProgress.done()
 
     const result = response.data
  /*    if (result.status===0) { // 操作成功
